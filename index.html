@@ -4,18 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-      body {
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, #a43820, #ba5536);
+        z-index: -1;
+      }
+
+      #content {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 100vh;
-        margin: 0;
-        background: linear-gradient(to right, #a43820, #ba5536);
+        height: 100%;
         color: #fff;
         font-family: "Times New Roman", Times, serif;
         font-size: 25px;
         text-align: center;
+        z-index: 1;
       }
 
       canvas {
@@ -27,16 +46,33 @@
       #score {
         margin-top: 10px;
       }
-    </style>
-    <title>Snake Game With dxD Zoldyck</title>
-  </head>
+      footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
 
+    </style>
+    <title>Game Ular Nabil</title>
+    <link rel="icon" href="logo_ular.png" />
+  </head>
   <body>
-    <canvas id="snakeCanvas" width="400" height="400"></canvas>
-    <div id="score-container">
-      <div id="score">Skor : <span>0</span></div>
-      <div id="high-score">Skor tertinggi : <span>0</span></div>
+    <div id="background"></div>
+    <div id="content">
+      <canvas id="snakeCanvas" width="400" height="400"></canvas>
+      <div id="score-container">
+        <div id="score">Skor : <span>0</span></div>
+        <div id="high-score">Skor Tertinggi : <span>0</span></div>
+      </div>
     </div>
+    <footer>
+        &copy; 2024 Muhammad Nabil
+    </footer>
 
     <script>
       const canvas = document.getElementById("snakeCanvas");
@@ -56,7 +92,12 @@
           ctx.fillStyle = index === 0 ? "#375e97" : "#fff";
           ctx.shadowBlur = index === 0 ? 10 : 0;
           ctx.shadowColor = "#375e97";
-          ctx.fillRect(segment.x * gridsize, segment.y * gridsize, gridsize, gridsize);
+          ctx.fillRect(
+            segment.x * gridsize,
+            segment.y * gridsize,
+            gridsize,
+            gridsize
+          );
           ctx.shadowBlur = 0;
         });
       }
@@ -143,7 +184,7 @@
       }
 
       function resetGame() {
-        alert(`Permainan telah berakhir! Skor Anda: ${score}`);
+        alert(`Permainan berakhir! Skor anda: ${score}`);
         updateHighScore();
         snake = [{ x: 10, y: 10 }];
         direction = "right";
@@ -215,6 +256,30 @@
 
         xDown = null;
         yDown = null;
+      }
+
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        canvas.addEventListener("touchstart", handleTouchStart, false);
+        canvas.addEventListener("touchmove", handleTouchMove, false);
+      } else {
+        document.addEventListener("keydown", (event) => {
+          switch (event.key) {
+            case "ArrowUp":
+              if (direction !== "down") direction = "up";
+              break;
+            case "ArrowDown":
+              if (direction !== "up") direction = "down";
+              break;
+            case "ArrowLeft":
+              if (direction !== "right") direction = "left";
+              break;
+            case "ArrowRight":
+              if (direction !== "left") direction = "right";
+              break;
+          }
+        });
       }
 
       gameLoop();

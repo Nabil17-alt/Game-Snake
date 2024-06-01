@@ -31,7 +31,7 @@
         flex-direction: column;
         height: 100%;
         color: #fff;
-        font-family: "Times New Roman", Times, serif;
+        font-family: Arial, sans-serif;
         font-size: 25px;
         text-align: center;
         z-index: 1;
@@ -47,9 +47,10 @@
         max-height: 400px;
       }
 
-      #score {
+      #score-container {
         margin-top: 10px;
       }
+
       footer {
         position: fixed;
         bottom: 0;
@@ -75,6 +76,7 @@
     </div>
     <footer>&copy; 2024 Muhammad Nabil</footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       const canvas = document.getElementById("snakeCanvas");
       const ctx = canvas.getContext("2d");
@@ -186,20 +188,22 @@
 
       function resetGame() {
         Swal.fire({
-          title: "Game Ular",
-          text: "Permainan berakhir!",
+          title: "Game Over",
+          text: "Permainan berakhir! Skor anda: " + score,
           imageUrl: "logo_ular.png",
           imageWidth: 100,
           imageHeight: 100,
-          imageAlt: "Custom image",
+          imageAlt: "Logo Ular",
+          confirmButtonText: "Main Lagi"
+        }).then(() => {
+          updateHighScore();
+          snake = [{ x: 10, y: 10 }];
+          direction = "right";
+          food = getRandomFood();
+          score = 0;
+          updateScore();
+          speed = initialSpeed;
         });
-        updateHighScore();
-        snake = [{ x: 10, y: 10 }];
-        direction = "right";
-        food = getRandomFood();
-        score = 0;
-        updateScore();
-        speed = initialSpeed;
       }
 
       function gameLoop() {
@@ -292,6 +296,5 @@
 
       gameLoop();
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

@@ -41,26 +41,25 @@
         background-color: #1d1d1d;
         border: 1px solid #fff;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            width: 90%; 
-            height: 90%; 
-            max-width: 400px; 
-            max-height: 400px; 
+        width: 90%;
+        height: 90%;
+        max-width: 400px;
+        max-height: 400px;
       }
 
       #score {
         margin-top: 10px;
       }
       footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 14px;
-        }
-
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 14px;
+      }
     </style>
     <title>Game Ular Nabil</title>
     <link rel="icon" href="logo_ular.png" />
@@ -74,9 +73,7 @@
         <div id="high-score">Skor Tertinggi : <span>0</span></div>
       </div>
     </div>
-    <footer>
-        &copy; 2024 Muhammad Nabil
-    </footer>
+    <footer>&copy; 2024 Muhammad Nabil</footer>
 
     <script>
       const canvas = document.getElementById("snakeCanvas");
@@ -188,7 +185,14 @@
       }
 
       function resetGame() {
-        alert(`Permainan berakhir! Skor anda: ${score}`);
+        Swal.fire({
+          title: "Game Ular",
+          text: "Permainan berakhir!",
+          imageUrl: "logo_ular.png",
+          imageWidth: 100,
+          imageHeight: 100,
+          imageAlt: "Custom image",
+        });
         updateHighScore();
         snake = [{ x: 10, y: 10 }];
         direction = "right";
@@ -288,5 +292,6 @@
 
       gameLoop();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>
